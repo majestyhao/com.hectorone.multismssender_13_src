@@ -23,6 +23,7 @@ import android.os.Message;
 import android.provider.ContactsContract.PhoneLookup;
 import android.telephony.PhoneNumberUtils;
 import android.telephony.SmsManager;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -254,9 +255,11 @@ public class MultiSmsSender extends Activity {
 		HashMap<String, Long> deliveryIdMap = new HashMap<String, Long>();
 		mManyMessageContinue                = true;
 
+		// HERE
+		Log.i(DEBUG_TAG, "FACTOR 0 HERE" + message);
 		if("".equals(message)) {
 			{
-				displayDialog(handler, DIALOG_PROGRESS_CANCEL,null);
+				displayDialog(handler, DIALOG_PROGRESS_CANCEL, null);
 			}
 			return;
 		}
@@ -287,6 +290,8 @@ public class MultiSmsSender extends Activity {
 		for (int i = 0; i < size; i++) {
 			String newN = numbers[i].trim();
 			newN = newN.replace(" ", "");
+			// HERE
+			Log.i(DEBUG_TAG, "FACTOR HERE: " + i);
 			if (!newN.equals("")
 					&& PhoneNumberUtils.isWellFormedSmsAddress(newN)
 					&& !phoneNumberConform.contains(newN)) {
@@ -395,6 +400,7 @@ public class MultiSmsSender extends Activity {
 							}
 
 						}
+						// 发短信
 						manager.sendMultipartTextMessage(newN, null, messages,
 								sentIntents, deliveryIntents);
 
